@@ -38,10 +38,9 @@ public class BestDistanceSampler extends Thread {
 			try {
 				Thread.sleep(samplingIntervalMs);
 
-				int currentBestDistance = algorithm.getCurrentBestDistance();
+				double currentBestDistance = algorithm.getCurrentBestDistance();
 				bestDistanceHistory.add(currentBestDistance);
 				
-				System.out.println("Best distance found so far: " + currentBestDistance);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

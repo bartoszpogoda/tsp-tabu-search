@@ -8,6 +8,14 @@ public class Path {
 	public Path(int length) {
 		this.path = new int[length];
 	}
+	
+	public Path(Path pathToCopy) {
+		this(pathToCopy.getLength());
+	
+		for(int i = 0 ; i < pathToCopy.path.length ; i++) {
+			path[i] = pathToCopy.path[i];
+		}
+	}
 
 	public int getLength() {
 		return path.length;

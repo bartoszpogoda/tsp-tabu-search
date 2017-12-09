@@ -34,9 +34,9 @@ public class PathPositionSwapMove implements Move {
 	}
 
 	@Override
-	public int distanceChange(Instance instance, Path path) {
-		int lengthOfRemovedEdges = 0;
-		int lengthOfAddedEdges = 0;
+	public double distanceChange(Instance instance, Path path) {
+		double lengthOfRemovedEdges = 0;
+		double lengthOfAddedEdges = 0;
 
 		if (pathIdSmaller == pathIdBigger) {
 			return 0;
@@ -63,7 +63,7 @@ public class PathPositionSwapMove implements Move {
 			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdBigger - 1), path.getCity(pathIdSmaller));
 			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdSmaller), path.getCity(pathIdBigger + 1));
 		}
-
+		
 		return lengthOfAddedEdges - lengthOfRemovedEdges;
 	}
 

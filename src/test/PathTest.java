@@ -25,5 +25,15 @@ public class PathTest {
 		
 		assertEquals(39, totalDistance, 0.01);
 	}
+	
+	@Test
+	public void copiedPathShouldntBeReferenced() {
+		Path copiedPath = new Path(path);
+		
+		// City at position 1 is originally 1
+		path.setCity(1, 3);
+		
+		assertNotEquals(path.getCity(1), copiedPath.getCity(1));
+	}
 
 }

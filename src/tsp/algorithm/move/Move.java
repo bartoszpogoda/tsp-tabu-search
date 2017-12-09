@@ -19,7 +19,7 @@ public interface Move {
 	 * @param path
 	 * @return
 	 */
-	int distanceChange(Instance instance, Path path);
+	double distanceChange(Instance instance, Path path);
 
 	@Override
 	boolean equals(Object obj);

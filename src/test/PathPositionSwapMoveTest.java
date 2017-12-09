@@ -25,16 +25,16 @@ public class PathPositionSwapMoveTest {
 	public void distanceChangeAdjacentCitiesTest() {
 		Move move = new PathPositionSwapMove(1, 2);
 
-		int distanceChange = move.distanceChange(instance, path);
-		assertEquals(-9, distanceChange);
+		double distanceChange = move.distanceChange(instance, path);
+		assertEquals(-9, distanceChange, 0.01);
 	}
 
 	@Test
 	public void distanceChangeNotAdjacentCitiesTest() {
 		Move move = new PathPositionSwapMove(2, 4);
 
-		int distanceChange = move.distanceChange(instance, path);
-		assertEquals(-30, distanceChange);
+		double distanceChange = move.distanceChange(instance, path);
+		assertEquals(-30, distanceChange, 0.01);
 	}
 
 }

@@ -21,7 +21,7 @@ public class AlgorithmTerminatorTest {
 	@Test
 	public void shouldTerminateAlgorithm() throws InterruptedException {
 		// given
-		Algorithm spyAlgorithm = spy(Algorithm.class);
+		Algorithm spyAlgorithm = spy(new Algorithm(null, null));
 		algorithmTerminator.setAlgorithm(spyAlgorithm);
 
 		// when

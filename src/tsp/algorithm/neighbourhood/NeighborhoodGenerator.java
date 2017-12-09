@@ -11,6 +11,6 @@ import tsp.algorithm.path.Path;
  * @author Student225988
  *
  */
-public interface Neighborhood {
+public interface NeighborhoodGenerator {
 	List<Move> generateNeighborhood(Path path);
 }
