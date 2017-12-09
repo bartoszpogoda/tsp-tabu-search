@@ -1,5 +1,7 @@
 package tsp.algorithm;
 
+import tsp.algorithm.move.Move;
+
 public class Path {
 	private int[] path = null;
 	
