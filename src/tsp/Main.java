@@ -17,12 +17,13 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		InstanceFileReader instanceFileReader = new InstanceFileReader();
-		Instance instance = instanceFileReader.read("input/d1291.tsp");
+		Instance instance = instanceFileReader.read("input/bays29.tsp");
 
 		AlgorithmTerminator algorithmTerminator = new AlgorithmTerminator();
 		algorithmTerminator.setTimeLimitMs(60000);
 		
-		TabuList tabuList = new TabuListImpl();
+		TabuList tabuList = new TabuListImpl(29*3);
+		
 		NeighborhoodGenerator neighborhoodGenerator = new PathPositionSwapNeighborhoodGenerator();
 		
 		Algorithm algorithm = new Algorithm(tabuList, neighborhoodGenerator);

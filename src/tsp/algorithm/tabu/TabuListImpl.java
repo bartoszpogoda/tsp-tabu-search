@@ -4,16 +4,20 @@ import tsp.algorithm.move.Move;
 
 public class TabuListImpl implements TabuList {
 
+	LimitedQueue<Move> tabuMoves;
+	
+	public TabuListImpl(int tabuListSize) {
+		tabuMoves = new LimitedQueue<>(tabuListSize);
+	}
+	
 	@Override
 	public void addMove(Move move) {
-		// TODO Auto-generated method stub
-
+		tabuMoves.add(move);
 	}
 
 	@Override
 	public boolean isTabu(Move move) {
-		// TODO Auto-generated method stub
-		return false;
+		return tabuMoves.contains(move);
 	}
 
 }

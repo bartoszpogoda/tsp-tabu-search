@@ -81,12 +81,13 @@ public class Algorithm {
 			double bestDistanceChange = Double.MAX_VALUE;
 			for (Move move : neighborhood) {
 				double distanceChange = move.distanceChange(instance, currentPath);
-				if (distanceChange < bestDistanceChange) {
+				if (distanceChange < bestDistanceChange && !tabuList.isTabu(move)) {
 					bestMove = move;
 					bestDistanceChange = distanceChange;
 				}
 			}
-			
+
+			tabuList.addMove(bestMove);
 			bestMove.applyOn(currentPath);
 			currentDistance += bestDistanceChange;
 			
