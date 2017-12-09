@@ -1,5 +1,6 @@
 package tsp.algorithm;
 
+import tsp.algorithm.path.Path;
 import tsp.algorithm.thread.AlgorithmTerminator;
 import tsp.instance.Instance;
 

@@ -1,5 +1,7 @@
 package tsp.instance;
 
+import tsp.algorithm.path.Path;
+
 /***
  * Class responsible for holding TS Problem instance data
  * 
@@ -25,6 +27,16 @@ public class Instance {
 
 	public double getDistance(int startCity, int endCity) {
 		return adjacencyMatrix[startCity][endCity];
+	}
+	
+	public double calculateTotalDistance(Path path) {
+		double totalDistance = 0;
+		
+		for(int i=0 ; i < path.getLength() - 1 ; i++) {
+			totalDistance += getDistance(path.getCity(i), path.getCity(i+1));
+		}
+		
+		return totalDistance;
 	}
 	
 	@Override

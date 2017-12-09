@@ -1,29 +1,29 @@
 package tsp.algorithm.move;
 
-import tsp.algorithm.Path;
+import tsp.algorithm.path.Path;
+import tsp.instance.Instance;
 
 public class PathPositionSwapMove implements Move {
 
-	private int pathIdA, pathIdB;
+	private int pathIdSmaller, pathIdBigger;
 
 	public PathPositionSwapMove(int pathIdA, int pathIdB) {
-		this.pathIdA = pathIdA;
-		this.pathIdB = pathIdB;
+		this.pathIdSmaller = Math.min(pathIdA, pathIdB);
+		this.pathIdBigger = Math.max(pathIdA, pathIdB);
 	}
 
 	@Override
 	public void applyOn(Path path) {
-		int cityA = path.getCity(pathIdA);
-		path.setCity(pathIdA, path.getCity(pathIdB));
-		path.setCity(pathIdB, cityA);
+		int cityA = path.getCity(pathIdSmaller);
+		path.setCity(pathIdSmaller, path.getCity(pathIdBigger));
+		path.setCity(pathIdBigger, cityA);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof PathPositionSwapMove) {
 			PathPositionSwapMove anotherMove = (PathPositionSwapMove) obj;
-			if ((this.pathIdA == anotherMove.pathIdA && this.pathIdB == anotherMove.pathIdB)
-					|| this.pathIdA == anotherMove.pathIdB && this.pathIdB == anotherMove.pathIdA) {
+			if (this.pathIdSmaller == anotherMove.pathIdSmaller && this.pathIdBigger == anotherMove.pathIdBigger) {
 				return true;
 			} else {
 				return false;
@@ -31,6 +31,40 @@ public class PathPositionSwapMove implements Move {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public int distanceChange(Instance instance, Path path) {
+		int lengthOfRemovedEdges = 0;
+		int lengthOfAddedEdges = 0;
+
+		if (pathIdSmaller == pathIdBigger) {
+			return 0;
+		} else if (pathIdSmaller == pathIdBigger - 1) {
+			// Adjacent cities
+
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdSmaller - 1), path.getCity(pathIdSmaller));
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdSmaller), path.getCity(pathIdBigger));
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdBigger), path.getCity(pathIdBigger + 1));
+
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdSmaller - 1), path.getCity(pathIdBigger));
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdBigger), path.getCity(pathIdSmaller));
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdSmaller), path.getCity(pathIdBigger + 1));
+		} else {
+			// Not adjacent cities
+
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdSmaller - 1), path.getCity(pathIdSmaller));
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdSmaller), path.getCity(pathIdSmaller + 1));
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdBigger - 1), path.getCity(pathIdBigger));
+			lengthOfRemovedEdges += instance.getDistance(path.getCity(pathIdBigger), path.getCity(pathIdBigger + 1));
+
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdSmaller - 1), path.getCity(pathIdBigger));
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdBigger), path.getCity(pathIdSmaller + 1));
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdBigger - 1), path.getCity(pathIdSmaller));
+			lengthOfAddedEdges += instance.getDistance(path.getCity(pathIdSmaller), path.getCity(pathIdBigger + 1));
+		}
+
+		return lengthOfAddedEdges - lengthOfRemovedEdges;
 	}
 
 }
