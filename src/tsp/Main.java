@@ -15,6 +15,7 @@ import com.sun.org.apache.xpath.internal.operations.Div;
 import tsp.algorithm.Algorithm;
 import tsp.algorithm.BestDistanceHistory;
 import tsp.algorithm.neighborhood.InsertNeighborhoodGenerator;
+import tsp.algorithm.neighborhood.InvertNeighborhoodGenerator;
 import tsp.algorithm.neighborhood.NeighborhoodGenerator;
 import tsp.algorithm.neighborhood.SwapNeighborhoodGenerator;
 import tsp.algorithm.tabu.TabuList;
@@ -41,7 +42,8 @@ public class Main {
 		TabuList tabuList = new TabuListImpl(101*3); //new TabuListDisabled();//
 		
 		//NeighborhoodGenerator neighborhoodGenerator = new SwapNeighborhoodGenerator();
-		NeighborhoodGenerator neighborhoodGenerator = new InsertNeighborhoodGenerator();
+		//NeighborhoodGenerator neighborhoodGenerator = new InsertNeighborhoodGenerator();
+		NeighborhoodGenerator neighborhoodGenerator = new InvertNeighborhoodGenerator();
 		
 		Algorithm algorithm = new Algorithm(tabuList, neighborhoodGenerator);
 		algorithm.setAlgorithmTerminator(algorithmTerminator);

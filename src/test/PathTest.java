@@ -15,7 +15,7 @@ public class PathTest {
 
 	@Before
 	public void setUp() {
-		instance = PredefinedTestObjects.createPredefinedInstance();
+		instance = PredefinedTestObjects.createPredefinedInstanceA();
 		path = PredefinedTestObjects.createPredefinedPath();
 	}
 

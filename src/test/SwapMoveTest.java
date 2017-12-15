@@ -17,7 +17,7 @@ public class SwapMoveTest {
 
 	@Before
 	public void setUp() {
-		instance = PredefinedTestObjects.createPredefinedInstance();
+		instance = PredefinedTestObjects.createPredefinedInstanceA();
 		path = PredefinedTestObjects.createPredefinedPath();
 	}
 
