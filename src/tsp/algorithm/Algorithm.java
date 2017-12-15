@@ -3,16 +3,19 @@ package tsp.algorithm;
 import java.util.List;
 
 import tsp.algorithm.move.Move;
-import tsp.algorithm.neighbourhood.NeighborhoodGenerator;
+import tsp.algorithm.neighborhood.NeighborhoodGenerator;
 import tsp.algorithm.path.Path;
 import tsp.algorithm.path.PathGenerator;
 import tsp.algorithm.tabu.TabuList;
 import tsp.algorithm.thread.AlgorithmTerminator;
 import tsp.algorithm.thread.BestDistanceSampler;
+import tsp.algorithm.thread.DiversificationChecker;
 import tsp.instance.Instance;
 
 public class Algorithm {
 	private volatile boolean running = true;
+	
+	private volatile boolean diversificationFlag = false;
 
 	private Path currentPath;
 	private double currentDistance = Double.MAX_VALUE;
@@ -25,6 +28,7 @@ public class Algorithm {
 	// dependencies
 	private AlgorithmTerminator algorithmTerminator;
 	private BestDistanceSampler bestDistanceSampler;
+	private DiversificationChecker diversificationChecker;
 
 	private TabuList tabuList;
 	private NeighborhoodGenerator neighborhoodGenerator;
@@ -32,6 +36,11 @@ public class Algorithm {
 	public void setAlgorithmTerminator(AlgorithmTerminator algorithmTerminator) {
 		this.algorithmTerminator = algorithmTerminator;
 		algorithmTerminator.setAlgorithm(this);
+	}
+	
+	public void setDiversificationChecker(DiversificationChecker diversificationChecker) {
+		this.diversificationChecker = diversificationChecker;
+		diversificationChecker.setAlgorithm(this);
 	}
 
 	public void setBestDistanceSampler(BestDistanceSampler bestDistanceSampler) {
@@ -48,23 +57,28 @@ public class Algorithm {
 	public double getCurrentBestDistance() {
 		return currentBestDistance;
 	}
+	
+	public double getCurrentDistance() {
+		return currentDistance;
+	}
 
 	public synchronized Path execute(Instance instance) {
 		algorithmTerminator.start();
 		bestDistanceSampler.start();
+		diversificationChecker.start();
 
 		initStartingPath(instance);
 
 		localSearchLoop(instance);
 
+		diversificationChecker.terminate();
 		bestDistanceSampler.terminate();
 
 		return currentBestPath;
 	}
 
 	public void initStartingPath(Instance instance) {
-		// TODO implement and generate greedy here
-		currentPath = pathGenerator.generateRandomPath(instance);
+		currentPath = pathGenerator.generateGreedyPath(instance);
 		currentDistance = instance.calculateTotalDistance(currentPath);
 		
 		System.out.println("Init distance: " + currentDistance);
@@ -75,6 +89,11 @@ public class Algorithm {
 
 	public void localSearchLoop(Instance instance) {
 		while (running) {
+			
+			if(diversificationFlag) {
+				diversificate(instance);
+			}
+			
 			List<Move> neighborhood = neighborhoodGenerator.generateNeighborhood(currentPath);
 
 			Move bestMove = null;
@@ -99,7 +118,19 @@ public class Algorithm {
 		}
 	}
 
+	private void diversificate(Instance instance) {
+		currentPath = pathGenerator.generateRandomPath(instance);
+		currentDistance = instance.calculateTotalDistance(currentPath);
+		
+		diversificationFlag = false;
+		System.out.println("Diversification executed");
+	}
+
 	public void terminate() {
 		running = false;
+	}
+
+	public void setDiversificationFlag() {
+		diversificationFlag = true;
 	}
 }
