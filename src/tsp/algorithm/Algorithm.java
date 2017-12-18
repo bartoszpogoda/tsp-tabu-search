@@ -22,6 +22,8 @@ public class Algorithm {
 
 	private Path currentBestPath;
 	private double currentBestDistance = Double.MAX_VALUE;
+	
+	private double currentDiversificationBestDistance = Double.MAX_VALUE;
 
 	private PathGenerator pathGenerator;
 
@@ -58,20 +60,25 @@ public class Algorithm {
 		return currentBestDistance;
 	}
 	
-	public double getCurrentDistance() {
-		return currentDistance;
+	public double getCurrentDiversificationBestDistance() {
+		return currentDiversificationBestDistance;
 	}
 
 	public synchronized Path execute(Instance instance) {
 		algorithmTerminator.start();
-		bestDistanceSampler.start();
-		diversificationChecker.start();
+		if(diversificationChecker != null) {
+			diversificationChecker.start();
+		}
 
 		initStartingPath(instance);
+		
+		bestDistanceSampler.start();
 
 		localSearchLoop(instance);
 
-		diversificationChecker.terminate();
+		if(diversificationChecker != null) {
+			diversificationChecker.terminate();
+		}
 		bestDistanceSampler.terminate();
 
 		return currentBestPath;
@@ -81,8 +88,6 @@ public class Algorithm {
 		currentPath = pathGenerator.generateGreedyPath(instance);
 		currentDistance = instance.calculateTotalDistance(currentPath);
 		
-		System.out.println("Init distance: " + currentDistance);
-
 		currentBestPath = new Path(currentPath);
 		currentBestDistance = currentDistance;
 	}
@@ -114,6 +119,10 @@ public class Algorithm {
 				currentBestDistance = currentDistance;
 				currentBestPath = new Path(currentPath);
 			}
+			
+			if(currentDistance < currentDiversificationBestDistance) {
+				currentDiversificationBestDistance = currentDistance;
+			}
 
 		}
 	}
@@ -121,6 +130,9 @@ public class Algorithm {
 	private void diversificate(Instance instance) {
 		currentPath = pathGenerator.generateRandomPath(instance);
 		currentDistance = instance.calculateTotalDistance(currentPath);
+		
+		currentDiversificationBestDistance = Double.MAX_VALUE;
+		tabuList.clear();
 		
 		diversificationFlag = false;
 		System.out.println("Diversification executed");

@@ -15,9 +15,6 @@ public interface Move {
 	/**
 	 * Calculates difference between total distance after move application and
 	 * total distance before. The less is the value the better the move is
-	 * 
-	 * @param path
-	 * @return
 	 */
 	double distanceChange(Instance instance, Path path);
 

@@ -21,6 +21,10 @@ public class AlgorithmTerminator extends Thread{
 		this.timeLimitMs = timeLimitMs;
 	}
 	
+	public long getTimeLimitMs() {
+		return timeLimitMs;
+	}
+	
 	@Override
 	public void run() {
 		try {

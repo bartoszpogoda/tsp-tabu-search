@@ -24,7 +24,7 @@ public class InvertNeighborhoodGenerator implements NeighborhoodGenerator {
 
 	@Override
 	public String toString() {
-		return "Neighborhood: Invert Moves";
+		return "Invert Moves";
 	}
 
 }

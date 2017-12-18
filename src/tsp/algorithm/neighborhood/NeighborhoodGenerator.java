@@ -14,3 +14,4 @@ import tsp.algorithm.path.Path;
 public interface NeighborhoodGenerator {
 	List<Move> generateNeighborhood(Path path);
 }
+ 	

@@ -5,7 +5,7 @@ import tsp.instance.Instance;
 
 public class PredefinedTestObjects {
 	// naive
-	static Instance createPredefinedInstanceA() {
+	public static Instance createPredefinedInstanceA() {
 		Instance instance = new Instance(5);
 
 		for (int i = 0; i < 5; i++) {
@@ -23,7 +23,7 @@ public class PredefinedTestObjects {
 		return instance;
 	}
 	
-	static Instance createPredefinedInstanceB() {
+	public static Instance createPredefinedInstanceB() {
 		Instance instance = new Instance(5);
 		
 		instance.setDistance(0, 1, 2);
@@ -54,7 +54,7 @@ public class PredefinedTestObjects {
 		return instance;
 	}
 	
-	static Path createPredefinedPath() {
+	public static Path createPredefinedPath() {
 		Path path = new Path(5 + 1);
 
 		path.setStartCity(0);

@@ -10,5 +10,9 @@ import tsp.algorithm.move.Move;
 public interface TabuList {
 	void addMove(Move move);
 	
+	void setCadency(int cadency);
+	
+	void clear();
+	
 	boolean isTabu(Move move);
 }

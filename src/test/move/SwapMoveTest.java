@@ -1,10 +1,11 @@
-package test;
+package test.move;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import test.PredefinedTestObjects;
 import tsp.algorithm.move.Move;
 import tsp.algorithm.move.SwapMove;
 import tsp.algorithm.path.Path;

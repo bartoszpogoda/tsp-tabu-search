@@ -15,7 +15,6 @@ public class DiversificationChecker extends Thread {
 
 	private volatile boolean running = true;
 
-	private double previousDistance = Double.MAX_VALUE;
 	private double previousBestDistance = Double.MAX_VALUE;
 
 	private Algorithm algorithm;
@@ -29,6 +28,10 @@ public class DiversificationChecker extends Thread {
 		this.diversificationIntervalMs = diversificationIntervalMs;
 	}
 
+	public long getDiversificationIntervalMs() {
+		return diversificationIntervalMs;
+	}
+	
 	public void terminate() {
 		running = false;
 	}
@@ -40,15 +43,15 @@ public class DiversificationChecker extends Thread {
 				Thread.sleep(diversificationIntervalMs);
 
 				if (algorithm != null) {
-					double currentBestDistance = algorithm.getCurrentBestDistance();
-					double currentDistance = algorithm.getCurrentDistance();
+					double currentBestDistance = algorithm.getCurrentDiversificationBestDistance();
 
-					if (currentDistance >= previousDistance && currentBestDistance == previousBestDistance) {
+					if (currentBestDistance >= previousBestDistance) {
 						algorithm.setDiversificationFlag();
+						previousBestDistance = Double.MAX_VALUE;
+					} else {
+						previousBestDistance = currentBestDistance;
 					}
 
-					previousDistance = currentDistance;
-					previousBestDistance = currentBestDistance;
 				}
 
 			} catch (InterruptedException e) {
@@ -57,4 +60,8 @@ public class DiversificationChecker extends Thread {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Diversification (" + diversificationIntervalMs/1000 + "s)";
+	}
 }

@@ -26,7 +26,7 @@ public class InsertNeighborhoodGenerator implements NeighborhoodGenerator {
 
 	@Override
 	public String toString() {
-		return "Neighborhood: Insert Moves";
+		return "Insert Moves";
 	}
 
 }

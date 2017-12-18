@@ -24,7 +24,7 @@ public class SwapNeighborhoodGenerator implements NeighborhoodGenerator {
 	
 	@Override
 	public String toString() {
-		return "Neighborhood: Swap Moves";
+		return "Swap Moves";
 	}
 
 }

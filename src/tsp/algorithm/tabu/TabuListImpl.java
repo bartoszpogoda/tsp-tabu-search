@@ -19,5 +19,20 @@ public class TabuListImpl implements TabuList {
 	public boolean isTabu(Move move) {
 		return tabuMoves.contains(move);
 	}
+	
+	@Override
+	public String toString() {
+		return "LimitedQueue (" + tabuMoves.getLimit() + ")";
+	}
 
+	@Override
+	public void setCadency(int cadency) {
+		tabuMoves = new LimitedQueue<>(cadency);
+		
+	}
+
+	@Override
+	public void clear() {
+		tabuMoves.clear();
+	}
 }

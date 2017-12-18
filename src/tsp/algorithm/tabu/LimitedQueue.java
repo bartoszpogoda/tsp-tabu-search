@@ -10,6 +10,10 @@ public class LimitedQueue<E> extends LinkedList<E> {
     public LimitedQueue(int limit) {
         this.limit = limit;
     }
+    
+    public int getLimit() {
+    	return limit;
+    }
 
     @Override
     public boolean add(E o) {

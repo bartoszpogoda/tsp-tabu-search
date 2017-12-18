@@ -10,6 +10,8 @@ import tsp.algorithm.path.Path;
 public class Instance {
 	private double adjacencyMatrix[][];
 	private int numberOfCities;
+	
+	private String name;
 
 	public Instance(int numberOfCities) {
 		this.numberOfCities = numberOfCities;
@@ -27,6 +29,14 @@ public class Instance {
 
 	public double getDistance(int startCity, int endCity) {
 		return adjacencyMatrix[startCity][endCity];
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public double calculateTotalDistance(Path path) {

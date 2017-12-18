@@ -6,13 +6,28 @@ public class TabuListDisabled implements TabuList {
 
 	@Override
 	public void addMove(Move move) {
-		// TODO Auto-generated method stub
-
+		// Do nothing
 	}
 
 	@Override
 	public boolean isTabu(Move move) {
 		return false;
 	}
+	
+	@Override
+	public void setCadency(int cadency) {
+		// Do nothing
+		
+	}
 
+	@Override
+	public void clear() {
+		// Do nothing
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Disabled";
+	}
 }
