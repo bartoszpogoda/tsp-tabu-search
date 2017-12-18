@@ -74,7 +74,7 @@ public class Algorithm {
 		
 		bestDistanceSampler.start();
 
-		localSearchLoop(instance);
+		tabuSearchLoop(instance);
 
 		if(diversificationChecker != null) {
 			diversificationChecker.terminate();
@@ -92,7 +92,7 @@ public class Algorithm {
 		currentBestDistance = currentDistance;
 	}
 
-	public void localSearchLoop(Instance instance) {
+	public void tabuSearchLoop(Instance instance) {
 		while (running) {
 			
 			if(diversificationFlag) {
